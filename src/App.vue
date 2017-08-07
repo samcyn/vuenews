@@ -1,21 +1,24 @@
 <template>
 
-  <div id="app" class="container">
-      <SourceSelection v-on:sourceChanged="sourceChanged"></SourceSelection>
-      <Newslist v-bind:source="source"></Newslist>
+  <div id="app">
+      <!--<SourceSelection v-on:sourceChangedEventually="sourceChangedFromChildComponent"></SourceSelection>
+      <Newslist v-bind:source="source"></Newslist>-->
+      <home></home>
   </div>
 
 </template>
 
 <script>
-  import Newslist from './components/Newslist'
-  import SourceSelection from './components/SourceSelection'
-  
+  // import Newslist from './components/Newslist.vue'
+  // import SourceSelection from './components/SourceSelection.vue'
+  import Home from './components/Home.vue'
+
   export default {
     name: 'app',
     components: {
-      Newslist,
-      SourceSelection
+      Home
+      // Newslist,
+      // SourceSelection
     },
     data () {
       return {
@@ -23,7 +26,7 @@
       }
     },
     methods: {
-      sourceChanged: function (source) {
+      sourceChangedFromChildComponent: function (source) {
         this.source = source;
       }
     }
@@ -32,7 +35,5 @@
 </script>
 
 <style>
-  #app {
-    padding-top: 20px
-  }
+  
 </style>

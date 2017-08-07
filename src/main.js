@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 
+require('../node_modules/bulma/css/bulma.css');
+require('../node_modules/font-awesome/css/font-awesome.min.css');
+
 Vue.config.productionTip = false
 
 Vue.use(VueResource);
