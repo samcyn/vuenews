@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <menuList v-for="list in listItems" :key="list" :selected="list == 'ESPN'" @addActiveClassToMe="activeClasshandler" :id="list">{{list}}</menuList>
+        <menuList v-for="list in listItems" :key="list.id" :selected="list.id == chosenNews" @addActiveClassToMe="activeClasshandler" :id="list.id">{{list.name}}</menuList>
         <!--<menuList @addActiveClassToMe="activeClasshandler" name="CNN">CNN</menuList>
         <menuList @addActiveClassToMe="activeClasshandler" name="MTV">MTV</menuList>
         <menuList @addActiveClassToMe="activeClasshandler" name="TECHRADAR">TECHRADAR</menuList>-->
@@ -13,13 +13,33 @@ import MenuList from './Menu.vue'
 
 export default {
     name: 'menus',
+    props:{
+        chosenNews:{required: true}
+    },
     components:{
         MenuList
     },
     data () {
         return {
             menus: [],
-            listItems: ['ESPN', 'CNN', 'MTV', 'TECHRADAR']
+            listItems: [
+                {
+                    id: 'espn',
+                    name:'ESPN'
+                },
+                {
+                    id:'cnn',
+                    name: 'CNN'
+                },
+                {
+                    id: 'mtv-news',
+                    name: 'MTV News'
+                },
+                {
+                    id:'techradar',
+                    name: 'TechRadar'
+                }
+            ]
         }
     },
     created(){
@@ -31,8 +51,12 @@ export default {
         //fetch all options avaialable...
         this.$http.get('https://newsapi.org/v1/sources?language=en')
         .then(response => {
+            //console.log(response.data.sources);
             //update listItems here
-            //this.listItems = response.data.sources;
+            this.listItems = response.data.sources;
+            for(var i =0; i < this.listItems.length; i++){
+                console.log(this.listItems[i].id);
+            }
             //this.loading = false;
         });  
     },

@@ -22,7 +22,7 @@
                 <nav class="tabs is-boxed is-fullwidth">
                     <div class="container">
                         <!-- menus goes here -->
-                        <menus @changeTitle="changePageTitle">
+                        <menus @changeTitle="changePageTitle" :chosenNews="defaultNews">
                         </menus>
                     </div>
                 </nav>
@@ -87,7 +87,8 @@ export default {
             subtitle: '',
             stories: [],
             loading: false,
-            background: ''
+            background: '',
+            defaultNews: 'abc-news-au'
         }
     },
     methods:{
@@ -122,9 +123,9 @@ export default {
         
         //fetch espn news....
         this.changePageTitle({
-            id: 'espn',
+            id: this.defaultNews,
             $el:{
-                innerText: 'espn'
+                innerText: this.defaultNews
             }
         });
       
@@ -139,6 +140,10 @@ export default {
    }
    .hero{
        margin-bottom: 100px;
+   }
+   .hero-body{
+       background-repeat: no-repeat;
+       background-size: cover;
    }
    .container, .hero-body{
        position: relative;
