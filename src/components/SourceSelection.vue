@@ -14,12 +14,18 @@
         </div>
       </div>
     </div>
+    <newslist></newslist>
   </div>
 </template>
 
 <script>
+    import Newslist from './Newslist.vue'
+
     export default {
         name: 'sourceselection',
+        components:{
+            Newslist
+        },
         data () {
             return {
                 sources: [],
