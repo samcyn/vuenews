@@ -6,6 +6,10 @@
 
 <script>
 
+//import Source service
+import SourceService from '../../services/SourceService'
+
+//import menuList 
 import MenuList from './Menu.vue'
 
 export default {
@@ -47,16 +51,15 @@ export default {
     },
     mounted(){
         //fetch all options avaialable...
-        this.$http.get('https://newsapi.org/v1/sources?language=en')
-        .then(response => {
-            //console.log(response.data.sources);
+        //using services ..........
+        SourceService.get().then(response => {
             //update listItems here
             this.listItems = response.data.sources;
-            for(var i =0; i < this.listItems.length; i++){
-                console.log(this.listItems[i].id);
-            }
+            // for(var i =0; i < this.listItems.length; i++){
+            //     console.log(this.listItems[i].url);
+            // }
             //this.loading = false;
-        });  
+        }); 
     },
     methods:{
         activeClasshandler(arg){

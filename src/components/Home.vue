@@ -39,13 +39,13 @@
             <article class="media" v-for="story in stories" >
                 <figure class="media-left">
                     <p class="image is-100x100">
-                    <img :src="story.urlToImage">
+                        <img :src="story.urlToImage">
                     </p>
                 </figure>
                 <div class="media-content">
                     <div class="content">
                     <p>
-                        <strong>{{story.author || 'Anonymous' }}</strong> <small>@{{story.author}}</small> <small>{{story.publishedAt}}</small>
+                        <strong>{{story.author || 'Anonymous' }}</strong> <small>@{{story.author || 'Anonumous'}}</small> <small>{{story.publishedAt}}</small>
                         <br>
                         {{story.description}}
                     </p>
@@ -59,7 +59,9 @@
                             <span class="icon is-small"><i class="fa fa-retweet"></i></span>
                         </a>
                         <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-heart-o"></i></span>
+                            <span class="icon is-small">
+                                <i  :class="[ story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]" @click.prevent="favorited(story)"></i>
+                            </span>
                         </a>
                     </div>
                     </nav>
@@ -70,6 +72,10 @@
 </template>
 
 <script>
+//import Article service
+import ArticleService from '../services/ArticleService'
+
+//import Menus component
 import Menus from './menus/Menus.vue'
 
 
@@ -89,10 +95,17 @@ export default {
             subtitle: '',
             stories: [],
             background: '',
+            isFavorite: false,
             loading: false,
         }
     },
     methods:{
+        favorited(obj){
+            //note this will be sink with database..obj.favourite will change
+            this.isFavorite = !this.favorite;
+            obj.isFavorite = !obj.isFavorite
+        
+        },
         changePageTitle(arg){
             // arg as component itself
 
@@ -100,24 +113,29 @@ export default {
             this.loading = true;
 
             //change title...
-            this.title = `You're watching ${(arg.$el.innerText).toUpperCase()}`;
+            this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
 
-            //fecth articles available....
-            this.$http.get('https://newsapi.org/v1/articles?source=' + arg.id.toLowerCase() + '&apiKey=6728cb03140d4fc3966b9e0a8c8691dc')
-            .then(response => {
+            //using services to fecth data......
+            ArticleService.get(arg.id.toLowerCase()).then(response => {
                 //update stories....
                 this.stories = response.data.articles;
+            
                 
                 //change the background image to a random article background image base on stories length
-               
+               // console.log(Math.floor(Math.random() * (this.stories.length + 1)));
                 this.background = this.stories[Math.floor(Math.random() * (this.stories.length + 1))].urlToImage;
 
-                //change subtitle according to length of article avilable
-                this.subtitle = `${this.stories.length} Articles today`;
+                
+                //console.log(this.stories)
+                this.subtitle = `Visit ${this.stories[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
 
                 //hide loader
                 this.loading = false;
-            }); 
+
+            });
+
+
+
         }
     },
     created(){
