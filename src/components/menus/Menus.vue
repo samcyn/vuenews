@@ -1,9 +1,6 @@
 <template>
     <ul>
         <menuList v-for="list in listItems" :key="list.id" :selected="list.id == chosenNews" @addActiveClassToMe="activeClasshandler" :id="list.id">{{list.name}}</menuList>
-        <!--<menuList @addActiveClassToMe="activeClasshandler" name="CNN">CNN</menuList>
-        <menuList @addActiveClassToMe="activeClasshandler" name="MTV">MTV</menuList>
-        <menuList @addActiveClassToMe="activeClasshandler" name="TECHRADAR">TECHRADAR</menuList>-->
     </ul>
 </template>
 
@@ -14,6 +11,7 @@ import MenuList from './Menu.vue'
 export default {
     name: 'menus',
     props:{
+        //this props is used to decide menulist to chose
         chosenNews:{required: true}
     },
     components:{

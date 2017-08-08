@@ -83,12 +83,13 @@ export default {
     },
     data () {
         return {
-            title: "You're watching ESPN",
+            //default news...
+            defaultNews: 'abc-news-au',
+            title: '',
             subtitle: '',
             stories: [],
-            loading: false,
             background: '',
-            defaultNews: 'abc-news-au'
+            loading: false,
         }
     },
     methods:{
@@ -121,7 +122,7 @@ export default {
     },
     created(){
         
-        //fetch espn news....
+        //fetch default news by passing an object....
         this.changePageTitle({
             id: this.defaultNews,
             $el:{
