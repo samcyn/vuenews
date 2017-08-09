@@ -2,7 +2,7 @@
 
   <div id="app">
   
-    <section class="hero is-info is-medium">
+    <header class="hero is-info is-medium">
       <!-- Hero header: will stick at the top -->
       <div class="hero-head">
             <header class="nav">
@@ -32,16 +32,31 @@
                               <span class="icon">
                                   <i class="fa fa-github"></i>
                               </span>
-                              <span>Download</span>
+                              <span>Profile</span>
                             </a>
                         </span>
                     </div>
                 </div>
             </header>
       </div>
-    </section>
+    </header>
 
     <router-view></router-view>
+
+    <footer class="hero is-info is-medium footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>VueNews</strong> by <a href="http://jgthms.com">Iyanda Samson</a>.
+          </p>
+          <p>
+            <a class="icon" href="https://github.com/samcyn">
+              <i class="fa fa-github"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
   </div>
 
 </template>

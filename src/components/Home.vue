@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main>
         <section class="hero is-info is-medium">
            
 
@@ -29,46 +29,47 @@
             </div>
 
         </section>
-
-        <div class="container width-60p">
-            <div class="loader-container" v-if="loading">
-                <div class="spinner"></div>
-                <br>
-                <p>Please wait...</p>
-            </div>
-            <article class="media" v-for="story in stories" >
-                <figure class="media-left">
-                    <p class="image is-100x100">
-                        <img :src="story.urlToImage">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                    <p>
-                        <strong>{{story.author || 'Anonymous' }}</strong> <small>@{{story.author || 'Anonumous'}}</small> <small>{{story.publishedAt}}</small>
-                        <br>
-                        {{story.description}}
-                    </p>
-                    </div>
-                    <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-reply"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-retweet"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small">
-                                <i  :class="[ story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]" @click.prevent="favorited(story)"></i>
-                            </span>
-                        </a>
-                    </div>
-                    </nav>
+        <section>
+            <div class="container width-60p">
+                <div class="loader-container" v-if="loading">
+                    <div class="spinner"></div>
+                    <br>
+                    <p>Please wait...</p>
                 </div>
-            </article>
-        </div>
-    </div>
+                <article class="media" v-for="story in stories" >
+                    <figure class="media-left">
+                        <p class="image is-100x100">
+                            <img :src="story.urlToImage">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                        <p>
+                            <strong>{{story.author || 'Anonymous' }}</strong> <small>@{{story.author || 'Anonumous'}}</small> <small>{{story.publishedAt}}</small>
+                            <br>
+                            {{story.description}}
+                        </p>
+                        </div>
+                        <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item">
+                                <span class="icon is-small"><i class="fa fa-reply"></i></span>
+                            </a>
+                            <a class="level-item">
+                                <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+                            </a>
+                            <a class="level-item">
+                                <span class="icon is-small">
+                                    <i  :class="[ story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]" @click.prevent="favorited(story)"></i>
+                                </span>
+                            </a>
+                        </div>
+                        </nav>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
 </template>
 
 <script>
@@ -109,32 +110,38 @@ export default {
         changePageTitle(arg){
             // arg as component itself
 
+            const $this = this;
+
             //show loader 
-            this.loading = true;
+            $this.loading = true;
 
             //change title...
-            this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
+            $this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
 
             //using services to fecth data......
             ArticleService.get(arg.id.toLowerCase()).then(response => {
                 //update stories....
-                this.stories = response.data.articles;
+                $this.stories = response.data.articles;
             
                 
                 //change the background image to a random article background image base on stories length
                // console.log(Math.floor(Math.random() * (this.stories.length + 1)));
-                this.background = this.stories[Math.floor(Math.random() * (this.stories.length + 1))].urlToImage;
+                $this.background = $this.stories[Math.floor(Math.random() * ($this.stories.length + 1))].urlToImage;
 
                 
-                //console.log(this.stories)
-                this.subtitle = `Visit ${this.stories[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
+                console.log(this.stories)
+                $this.subtitle = `Visit ${this.stories[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
 
                 //hide loader
-                this.loading = false;
+                $this.loading = false;
 
+            }).catch(function(error){
+                console.log(error.ok);
+                if(error.status == 0){
+                  // alert('You need network...')
+                  //$this.loading = false;
+                }
             });
-
-
 
         }
     },
@@ -154,6 +161,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    main{
+        padding-bottom: 50px;
+    }
    .tabs{
        overflow-x: visible;
    }
@@ -167,6 +177,11 @@ export default {
    .container, .hero-body{
        position: relative;
    }
+   .container.width-60p{
+        min-width: 150px;
+        min-height: 150px;
+   }
+
    @media(min-width: 991px){
        .width-60p{width: 60%;}
    }
@@ -179,11 +194,12 @@ export default {
        bottom: 0;
        width: 100%;
        height:100%;
-       background: rgba(0, 0, 0, 0.75);
+       /*background: rgba(0, 0, 0, 0.75);*/
        display: flex;
        justify-content: center;
        align-items: center;
        align-content: center;
+       background: linear-gradient(to bottom right,#3273DC,#FFFFFF);
    }
 
    .image.is-100x100 {
@@ -192,8 +208,6 @@ export default {
     }
     .loader-container{
         position: absolute;
-        min-width: 150px;
-        min-height: 150px;
         width: 100%;
         height: 100%;
         top: 0;
