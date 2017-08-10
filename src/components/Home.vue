@@ -36,7 +36,7 @@
                     <br>
                     <p>Please wait...</p>
                 </div>
-                <article class="media" v-for="story in stories" >
+                <article class="media" v-for="story in post" >
                     <figure class="media-left">
                         <p class="image is-100x100">
                             <img :src="story.urlToImage">
@@ -44,11 +44,9 @@
                     </figure>
                     <div class="media-content">
                         <div class="content">
-                        <p>
-                            <strong>{{story.author || 'Anonymous' }}</strong> <small>@{{story.author || 'Anonumous'}}</small> <small>{{story.publishedAt}}</small>
-                            <br>
-                            {{story.description}}
-                        </p>
+                            <h4 class="media-heading"><a v-bind:href="story.url" target="_blank">{{story.title || 'Untitled'}}</a></h4>
+                            <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
+                            <p>{{story.description}}</p>
                         </div>
                         <nav class="level is-mobile">
                         <div class="level-left">
@@ -60,7 +58,7 @@
                             </a>
                             <a class="level-item">
                                 <span class="icon is-small">
-                                    <i  :class="[ story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]" @click.prevent="favorited(story)"></i>
+                                    <i  @click="favorited(story)" :class="[story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
                                 </span>
                             </a>
                         </div>
@@ -102,8 +100,9 @@ export default {
     },
     methods:{
         favorited(obj){
+            console.log(obj);
             //note this will be sink with database..obj.favourite will change
-            this.isFavorite = !this.favorite;
+           // this.isFavorite = !this.favorite;
             obj.isFavorite = !obj.isFavorite
         
         },
@@ -129,14 +128,14 @@ export default {
                 $this.background = $this.stories[Math.floor(Math.random() * ($this.stories.length + 1))].urlToImage;
 
                 
-                console.log(this.stories)
+               // console.log(this.stories)
                 $this.subtitle = `Visit ${this.stories[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
 
                 //hide loader
                 $this.loading = false;
 
             }).catch(function(error){
-                console.log(error.ok);
+                //console.log(error.ok);
                 if(error.status == 0){
                   // alert('You need network...')
                   //$this.loading = false;
@@ -155,6 +154,16 @@ export default {
             }
         });
       
+    },
+    computed:{
+        post(){
+            this.stories.forEach(function(story){
+                story['isFavorite'] = false;
+            });
+            //console.log(this.stories);
+            return this.stories;
+        }
+       
     }
 }
 </script>
@@ -168,6 +177,7 @@ export default {
        overflow-x: visible;
    }
    .hero{
+       min-height: 400px;
        margin-bottom: 100px;
    }
    .hero-body{
@@ -199,7 +209,7 @@ export default {
        justify-content: center;
        align-items: center;
        align-content: center;
-       background: linear-gradient(to bottom right,#3273DC,#FFFFFF);
+       background: linear-gradient(to bottom right,rgba(50, 115, 220, 0.95),rgba(255,255,255, 0.10));
    }
 
    .image.is-100x100 {

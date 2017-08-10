@@ -1,91 +1,95 @@
 <template>
+  <!-- adding nav-open to div if hamburger is clicked -->
+  <div id="app" :class="[navToggle ? 'nav-open' : '' ]">
+    <div class = "wrapper">
+      
+      <!-- navbar right here -->
+      <!--when hamburger is clicked, emit @siebarToggle which invoke sideBarController method -->
+      <navigation @sideBarToggle="sideBarController"></navigation>
 
-  <div id="app">
-  
-    <header class="hero is-info is-medium">
-      <!-- Hero header: will stick at the top -->
-      <div class="hero-head">
-            <header class="nav">
-                <div class="container">
-                    <div class="nav-left">
-                    <a class="nav-item">
-                        <img src="images/bulma-type-white.png" alt="Logo">
-                    </a>
-                    </div>
-                    <span class="nav-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    </span>
-                    <div class="nav-right nav-menu">
-                        <a class="nav-item is-active">
-                            <router-link :to="{ name: 'Home' }" tag="span">Home</router-link>
-                        </a>
-                        <a class="nav-item">
-                            <router-link :to="{ name: 'SourceSelection' }" tag="span">Examples</router-link>
-                        </a>
-                        <a class="nav-item">
-                            <router-link :to="{ name: 'Hello' }" tag="span">Documentation</router-link>
-                        </a>
-                        <span class="nav-item">
-                            <a class="button is-info is-inverted">
-                              <span class="icon">
-                                  <i class="fa fa-github"></i>
-                              </span>
-                              <span>Profile</span>
-                            </a>
-                        </span>
-                    </div>
-                </div>
-            </header>
-      </div>
-    </header>
+      <!-- router view -->
+      <router-view></router-view>
 
-    <router-view></router-view>
+      <!-- footer being called bottom -->
+      <bottom></bottom>
 
-    <footer class="hero is-info is-medium footer">
-      <div class="container">
-        <div class="content has-text-centered">
-          <p>
-            <strong>VueNews</strong> by <a href="http://jgthms.com">Iyanda Samson</a>.
-          </p>
-          <p>
-            <a class="icon" href="https://github.com/samcyn">
-              <i class="fa fa-github"></i>
-            </a>
-          </p>
-        </div>
-      </div>
-    </footer>
+    </div>
+    <!--sidebar for mobile screen -->
+    <sidebar :sidebarLists="sideBarList"></sidebar>
+
   </div>
 
 </template>
 
 <script>
+
   // import Newslist from './components/Newslist.vue'
   import SourceSelection from './components/SourceSelection'
   import Home from './components/Home'
+  import Navigation from './components/Navigation'
+  import Bottom from './components/Footer'
+  import Sidebar from './components/Sidebar'
 
   export default {
     name: 'app',
     components: {
       Home,
+      Navigation,
+      Bottom,
+      Sidebar,
       SourceSelection
     },
     data () {
       return {
-        source: ""
+        source: "",
+        navToggle: false,
+        sideBarList:""
       }
     },
     methods: {
-      sourceChangedFromChildComponent: function (source) {
+
+      sourceChangedFromChildComponent(source){
         this.source = source;
+      },
+
+      sideBarController(arg){
+        //arg is the navbar component as a whole
+
+        this.navToggle = !this.navToggle;
+
+        //this added navbar content to sidebar
+        this.sideBarList = arg.collapseClone;
+        console.log(arg.collapseClone);
       }
+
     }
   }
 
 </script>
 
 <style>
-  
+  @media (max-width: 768px){
+    .wrapper {
+        -webkit-transform: translate3d(0px, 0, 0);
+        -moz-transform: translate3d(0px, 0, 0);
+        -o-transform: translate3d(0px, 0, 0);
+        -ms-transform: translate3d(0px, 0, 0);
+        transform: translate3d(0px, 0, 0);
+        -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -ms-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        position: relative;
+    }
+
+    .nav-open .wrapper {
+      left: 0;
+      -webkit-transform: translate3d(-250px, 0, 0);
+      -moz-transform: translate3d(-250px, 0, 0);
+      -o-transform: translate3d(-250px, 0, 0);
+      -ms-transform: translate3d(-250px, 0, 0);
+      transform: translate3d(-250px, 0, 0);
+    }
+  }
 </style>
