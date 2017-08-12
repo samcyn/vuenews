@@ -45,7 +45,7 @@
                     <div class="media-content">
                         <div class="content">
                             <h4 class="media-heading">
-                                <router-link :to="'/home/' + story.id" >{{story.title || 'Untitled'}}</router-link>
+                                <router-link :to="'/home/' + story.description" >{{story.title || 'Untitled'}}</router-link>
                             </h4>
                             <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
                             <p>{{story.description}}</p>
@@ -159,11 +159,8 @@ export default {
     },
     computed:{
         post(){
-            const collections = this.stories;
             this.stories.forEach(function(story){
-                
                 story['isFavorite'] = false;
-                story['id'] = collections.indexOf(story);
             });
             console.log(this.stories);
             return this.stories;

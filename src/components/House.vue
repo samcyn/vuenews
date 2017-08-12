@@ -1,6 +1,6 @@
 <template>
   <!-- adding nav-open to div if hamburger is clicked -->
-  <div id="app" :class="[navToggle ? 'nav-open' : '' ]">
+  <div :class="[navToggle ? 'nav-open' : '' ]">
     <div class = "wrapper">
       
       <!-- navbar right here -->
@@ -24,16 +24,16 @@
 <script>
 
   // import Newslist from './components/Newslist.vue'
-  import SourceSelection from './components/SourceSelection'
-  import Contents from './components/Layouts/Contents'
-  import Navigation from './components/Layouts/Navigations'
-  import Bottom from './components/Layouts/Footer'
-  import Sidebar from './components/Layouts/SideNavigation'
+  import SourceSelection from './SourceSelection'
+  import Home from './Home'
+  import Navigation from './Navigation'
+  import Bottom from './Footer'
+  import Sidebar from './Sidebar'
 
   export default {
-    name: 'app',
+    name: 'house',
     components: {
-      Contents,
+      Home,
       Navigation,
       Bottom,
       Sidebar,
@@ -57,7 +57,7 @@
 
         this.navToggle = !this.navToggle;
 
-        //this added navbar content to sidebarList which a bind to sidebarList prop of sidebarComponent
+        //this added navbar content to sidebar
         this.sideBarList = arg.collapseClone;
         console.log(arg.collapseClone);
       }

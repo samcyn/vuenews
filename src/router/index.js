@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import UserLog from '@/components/Accounts/Login'
 import SourceSelection from '@/components/SourceSelection'
-import Home from '@/components/Home'
+import Contents from '@/components/Layouts/Contents'
+import Article from '@/components/Articles/Article'
 
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'userLog',
+      component: UserLog
     },
     {
       path: '/sourceSelection',
@@ -19,9 +21,14 @@ export default new Router({
       component: SourceSelection
     },
     {
-      path: '/home',
-      name: 'Home',
-      component: Home
+      path: '/main',
+      name: 'Contents',
+      component: Contents
+    },
+    {
+      path: '/home/:id',
+      name: 'Article',
+      component: Article
     }
   ]
 })
