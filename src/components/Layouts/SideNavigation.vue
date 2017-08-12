@@ -6,7 +6,7 @@
         <ul class="menu-list">
             <li class="items">
                 <a class="nav-item is-active">
-                    <router-link :to="{ name: 'Contents' }" tag="span">Home</router-link>
+                    <router-link :to="{ name: 'Articles' }" tag="span">Home</router-link>
                 </a>
             </li>
             <li class="items">
@@ -16,7 +16,7 @@
             </li>
             <li class="items">
                 <a class="nav-item">
-                    <router-link :to="{ name: 'Contents' }" tag="span">Documentation</router-link>
+                    <router-link :to="{ name: 'Articles' }" tag="span">Documentation</router-link>
                 </a>
             </li>
             <li class="items">

@@ -25,7 +25,7 @@
 
   // import Newslist from './components/Newslist.vue'
   import SourceSelection from './components/SourceSelection'
-  import Contents from './components/Layouts/Contents'
+  import Articles from './components/Articles/Articles'
   import Navigation from './components/Layouts/Navigations'
   import Bottom from './components/Layouts/Footer'
   import Sidebar from './components/Layouts/SideNavigation'
@@ -33,7 +33,7 @@
   export default {
     name: 'app',
     components: {
-      Contents,
+      Articles,
       Navigation,
       Bottom,
       Sidebar,

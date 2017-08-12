@@ -16,13 +16,13 @@
                     </span>
                     <div class="nav-right nav-menu">
                         <a class="nav-item is-active">
-                            <router-link :to="{ name: 'Contents' }" tag="span">Home</router-link>
+                            <router-link :to="{ name: 'Articles' }" tag="span">Home</router-link>
                         </a>
                         <a class="nav-item">
                             <router-link :to="{ name: 'SourceSelection' }" tag="span">Examples</router-link>
                         </a>
                         <a class="nav-item">
-                            <router-link :to="{ name: 'Contents' }" tag="span">Documentation</router-link>
+                            <router-link :to="{ name: 'Articles' }" tag="span">Documentation</router-link>
                         </a>
                         <span class="nav-item">
                             <a class="button is-info is-inverted">

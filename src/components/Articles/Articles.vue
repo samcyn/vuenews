@@ -45,7 +45,7 @@
                     <div class="media-content">
                         <div class="content">
                             <h4 class="media-heading">
-                                <router-link :to="'/home/' + story.description" >{{story.title || 'Untitled'}}</router-link>
+                                <router-link :to="'/articles/' + story.id" >{{story.title || 'Untitled'}}</router-link>
                             </h4>
                             <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
                             <p>{{story.description}}</p>
@@ -74,10 +74,10 @@
 
 <script>
 //import Article service
-import ArticleService from '../services/ArticleService'
+import ArticleService from '@/services/ArticleService'
 
 //import Menus component
-import Menus from './menus/Menus.vue'
+import Menus from '../menus/Menus.vue'
 
 
 export default {
@@ -159,8 +159,10 @@ export default {
     },
     computed:{
         post(){
+            const $stories = this.stories;
             this.stories.forEach(function(story){
                 story['isFavorite'] = false;
+                 story['id'] = $stories.indexOf(story);
             });
             console.log(this.stories);
             return this.stories;
