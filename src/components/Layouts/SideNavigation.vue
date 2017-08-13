@@ -11,12 +11,12 @@
             </li>
             <li class="items">
                 <a class="nav-item">
-                    <router-link :to="{ name: 'SourceSelection' }" tag="span">Examples</router-link>
+                    <router-link :to="{ name: 'Profile' }" tag="span">Profile</router-link>
                 </a>
             </li>
             <li class="items">
                 <a class="nav-item">
-                    <router-link :to="{ name: 'Articles' }" tag="span">Documentation</router-link>
+                    <router-link :to="{ name: 'Settings' }" tag="span">Settings</router-link>
                 </a>
             </li>
             <li class="items">
@@ -25,7 +25,7 @@
                         <span class="icon">
                             <i class="fa fa-github"></i>
                         </span>
-                        <span>Profile</span>
+                        <span>Fork Repo</span>
                     </a>
                 </span>
             </li>

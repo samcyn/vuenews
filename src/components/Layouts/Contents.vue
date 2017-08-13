@@ -24,7 +24,6 @@
 <script>
 
   // import Newslist from './components/Newslist.vue'
-  import SourceSelection from '../SourceSelection'
   import Articles from '../Articles/Articles'
   import Navigation from './Navigations'
   import Bottom from './Footer'
@@ -36,8 +35,7 @@
       Articles,
       Navigation,
       Bottom,
-      Sidebar,
-      SourceSelection
+      Sidebar
     },
     data () {
       return {

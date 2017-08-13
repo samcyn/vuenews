@@ -15,21 +15,21 @@
                         <span></span>
                     </span>
                     <div class="nav-right nav-menu">
-                        <a class="nav-item is-active">
-                            <router-link :to="{ name: 'Articles' }" tag="span">Home</router-link>
-                        </a>
-                        <a class="nav-item">
-                            <router-link :to="{ name: 'SourceSelection' }" tag="span">Examples</router-link>
-                        </a>
-                        <a class="nav-item">
-                            <router-link :to="{ name: 'Articles' }" tag="span">Documentation</router-link>
-                        </a>
+                        
+                            <router-link :to="{ name: 'Articles' }"  class="nav-item is-active">Home</router-link>
+                        
+                    
+                            <router-link :to="{ name: 'Profile' }" class="nav-item">Profile</router-link>
+                        
+                    
+                            <router-link :to="{ name: 'Settings' }" class="nav-item">Settings</router-link>
+                    
                         <span class="nav-item">
                             <a class="button is-info is-inverted">
                               <span class="icon">
                                   <i class="fa fa-github"></i>
                               </span>
-                              <span>Profile</span>
+                              <span>Fork Repo</span>
                             </a>
                         </span>
                     </div>

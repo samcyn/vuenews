@@ -4,7 +4,8 @@ import UserLog from '@/components/Auth/Login'
 import Contents from '@/components/Layouts/Contents'
 import Articles from '@/components/Articles/Articles'
 import Article from '@/components/Articles/Article'
-import SourceSelection from '@/components/SourceSelection'
+import Profile from '@/components/Accounts/Profile'
+import Settings from '@/components/Accounts/Settings'
 
 
 Vue.use(Router);
@@ -33,25 +34,19 @@ export default new Router({
           path: 'articles/:id',
           name: 'Article',
           component: Article
+        },
+        {
+          path: 'articles/profile',
+          name: 'Profile',
+          component: Profile
+        },
+        {
+          path: 'articles/settings',
+          name: 'Settings',
+          component: Settings
         }
         
       ]
-    },
-    
-    // {
-    //   path: '/artcles',
-    //   name: 'Articles',
-    //   component: Articles
-    // },
-    // {
-    //   path: '/articles/:id',
-    //   name: 'Article',
-    //   component: Article
-    // },
-    {
-      path: '/sourceSelection',
-      name: 'SourceSelection',
-      component: SourceSelection
     }
   ]
 })
