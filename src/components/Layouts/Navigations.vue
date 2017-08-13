@@ -44,6 +44,7 @@
         name: 'navigation',
         methods:{
             navController(){
+                //emit this event in parent component...
                 this.$emit('sideBarToggle', this);
             }
         },

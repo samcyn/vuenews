@@ -21,9 +21,7 @@
         </div>
         <div class="field">
           <p class="control">
-            <button class="button is-success">
-              Login
-            </button>
+              <router-link class="button is-success" :to="{ name: 'Articles' }" tag="button">Login</router-link>
           </p>
         </div>
     </form>
@@ -33,7 +31,7 @@
 export default {
   name: 'userLog',
   props:{
-    
+  
   }
 }
 </script>

@@ -1,21 +1,11 @@
 <template>
   <!-- adding nav-open to div if hamburger is clicked -->
-  <div :class="[navToggle ? 'nav-open' : '' ]">
-  
-    <div class = "wrapper">
-      <!-- navbar right here -->
-      <!--when hamburger is clicked, emit @siebarToggle which invoke sideBarController method -->
-      <navigation @sideBarToggle="sideBarController"></navigation>
+  <div id="app" :class="[navToggle ? 'nav-open' : '' ]">
+    
 
       <!-- router view -->
       <router-view></router-view>
 
-      <!-- footer being called bottom -->
-      <bottom></bottom>
-
-    </div>
-    <!--sidebar for mobile screen -->
-    <sidebar :sidebarLists="sideBarList"></sidebar>
 
   </div>
 
@@ -24,14 +14,14 @@
 <script>
 
   // import Newslist from './components/Newslist.vue'
-  import SourceSelection from '../SourceSelection'
-  import Articles from '../Articles/Articles'
-  import Navigation from './Navigations'
-  import Bottom from './Footer'
-  import Sidebar from './SideNavigation'
+  import SourceSelection from './components/SourceSelection'
+  import Articles from './components/Articles/Articles'
+  import Navigation from './components/Layouts/Navigations'
+  import Bottom from './components/Layouts/Footer'
+  import Sidebar from './components/Layouts/SideNavigation'
 
   export default {
-    name: 'contents',
+    name: 'app',
     components: {
       Articles,
       Navigation,

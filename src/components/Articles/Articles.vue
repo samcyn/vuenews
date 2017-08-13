@@ -45,7 +45,7 @@
                     <div class="media-content">
                         <div class="content">
                             <h4 class="media-heading">
-                                <router-link :to="'/articles/' + story.id" >{{story.title || 'Untitled'}}</router-link>
+                                <router-link :to="'/contents/articles/' + story.id" >{{story.title || 'Untitled'}}</router-link>
                             </h4>
                             <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
                             <p>{{story.description}}</p>
