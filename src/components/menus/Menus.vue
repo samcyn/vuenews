@@ -7,7 +7,7 @@
 <script>
 
 //import Source service
-import SourceService from '../../services/SourceService'
+import ChannelsService from '../../services/ChannelsService'
 
 //import menuList 
 import MenuList from './Menu.vue'
@@ -52,7 +52,7 @@ export default {
     mounted(){
         //fetch all options avaialable...
         //using services ..........
-        SourceService.get().then(response => {
+        ChannelsService.get().then(response => {
             //update listItems here
             this.listItems = response.data.sources;
             // for(var i =0; i < this.listItems.length; i++){

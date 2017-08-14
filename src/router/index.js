@@ -4,6 +4,7 @@ import UserLog from '@/components/Auth/Login'
 import Contents from '@/components/Layouts/Contents'
 import Articles from '@/components/Articles/Articles'
 import Article from '@/components/Articles/Article'
+import Channels from '@/components/Channels/Channels'
 import Profile from '@/components/Accounts/Profile'
 import Settings from '@/components/Accounts/Settings'
 
@@ -24,8 +25,14 @@ export default new Router({
       component: Contents,
       children: [
         {
-          path: 'articles',
+          path: 'channels',
           alias: '',
+          component: Channels,
+          name: 'Channels',
+          meta: {description: 'Select favorite channels'}
+        },
+        {
+          path: 'articles',
           component: Articles,
           name: 'Articles',
           meta: {description: 'Overview of environment'}
