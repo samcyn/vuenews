@@ -10,14 +10,14 @@
                 </div>
                 <li>
                     <label class="checkbox">
-                        Select All Channels <input type="checkbox" value="Select all channels" v-model="selectAll">
+                        Select All Channels <input type="checkbox" value="all" @change="selectHandler($event)">
                     </label>
                 </li>
                 
-                <li v-for="channel in channels">
+                <li v-for="(channel, index) in channels">
                     
                     <label class="checkbox">
-                        {{channel.name}} <input type="checkbox" :value="channel.id" v-model="selected" number>
+                        {{channel.name}} <input type="checkbox" :value="channel.id" v-model="selectedIds" @change="selectHandler($event, index, channel)" number>
                     </label>
                 </li>
             </ul>
@@ -54,7 +54,8 @@ export default {
                     name: 'TechRadar'
                 }
             ],
-            selected: [],
+            selectedIds: [],
+            selectedObjs: [],
             loading: false
         }
     },
@@ -71,24 +72,64 @@ export default {
             //this.loading = false;
         }); 
     },
-    computed: {
-        selectAll: {
-            get: function () {
-                return this.channels ? this.selected.length == this.channels.length : false;
-            },
-            set: function (value) {
-                var selected = [];
+    methods:{
+        //handles the on change behaviour....
+        selectHandler(e, ind, arg){
+            //if all channels are selected do this
+            if(e.target.value == 'all'){
+                //if checkbox with value all is selected do this....
+                if(e.target.checked){
 
-                if (value) {
-                    this.channels.forEach(function (channels) {
-                        selected.push(channels.id);
-                    });
+                    //this return array having channel.id as items..
+                    this.selectedIds = this.channels.map((channel => channel.id));
+                    
+                    //spread operator to  the rescue
+                    this.selectedObjs.push(...this.channels);
+                    // console.log(this.selectedObjs);
                 }
-
-                this.selected = selected;
-                //console.log(this.selected);
+                // else empty both arrays
+                else{
+                    this.selectedIds = [];
+                    this.selectedObjs = [];
+                }
+                return;
             }
+            //do this if a particular checkbox is selected....
+            if(e.target.checked){
+                this.selectedObjs.push(arg);
+               // this.selected.push(arg.id);
+                // console.log(Array.from(this.selectedObjs));
+                // console.log(Array.from(this.selectedIds));
+            }
+            //or do this if a particular checkbox is unselected...
+            else{
+                this.selectedObjs.splice(ind, 1);
+                 //this.selected.splice(ind, 1);
+                // console.log(this.selectedObjs);
+                // console.log(this.selectedIds);
+            }
+            
         }
+    },
+    computed: {
+        // selectAll: {
+        //     // get: function () {
+                
+        //     //     return this.channels ? this.selected.length == this.channels.length : false;
+        //     // },
+        //     // set: function (value) {
+        //     //     var selected = [];
+
+        //     //     if (value) {
+        //     //         this.channels.forEach(function (channels) {
+        //     //             selected.push(channels.id);
+        //     //         });
+        //     //     }
+                
+        //     //     this.selected = selected;
+        //     //     console.log(this.selected);
+        //     // }
+        // }
     }
 }
 </script>
