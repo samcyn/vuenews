@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <!-- login form -->
-    <div class="auth" id="login" v-if="!userOption">
+    <div class="auth" id="login" v-if=" userOption == 'logIn' ">
       <div class="thumbnail">
         <i class="fa fa-user fa-2x"></i>
       </div>
@@ -41,15 +41,17 @@
           </div>
       </form>
       <div class="">
-        <a class="button  is-outlined" @click.prevent="toggleUserOption()">Sign Up</a>
-        <a class="button is-outlined">Reset Password</a>
+        <a class="button  is-outlined" @click.prevent="toggleUserOption('signUp')">Sign Up</a>
+        <a class="button is-outlined" @click.prevent="toggleUserOption('reset')">Reset Password</a>
       </div>
       <div>
          <i class="fa fa-lock"></i>
       </div>
     </div>
+    <!-- login form ends here -->
+
     <!-- sign up form -->
-    <div class="auth" id="signUp" v-if="userOption">
+    <div class="auth" id="signUp" v-if="userOption == 'signUp' ">
       <div class="thumbnail">
         <i class="fa fa-user fa-2x"></i>
       </div>
@@ -89,13 +91,48 @@
           </div>
       </form>
       <div class="">
-        <a class="button  is-outlined" @click.prevent="toggleUserOption()">Sign In</a>
+        <a class="button  is-outlined" @click.prevent="toggleUserOption('logIn')">Sign In</a>
       </div>
       <div>
          <i class="fa fa-lock"></i>
       </div>
     </div>
     <!-- sign up form ends -->
+
+    <!-- reset form -->
+    <div class="auth" id="reset" v-if="userOption == 'reset'">
+      <div class="thumbnail">
+        <i class="fa fa-user fa-2x"></i>
+      </div>
+      <p class="auth-text">Reset Password</p>
+      
+      <form>
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="Email">
+              <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-text-centered">
+                <router-link class="button is-success block" :to="{ name: 'Articles' }" tag="button">Login</router-link>
+            </p>
+          </div>
+      </form>
+      <div class="">
+        <a class="button  is-outlined" @click.prevent="toggleUserOption('logIn')">Sign In</a>
+        <a class="button  is-outlined" @click.prevent="toggleUserOption('signUp')">Sign Up</a>
+      </div>
+      <div>
+         <i class="fa fa-lock"></i>
+      </div>
+    </div>
+    <!-- reset form ends here -->
   </div>
 </template>
 
@@ -107,12 +144,12 @@ export default {
   },
   data(){
     return{
-      userOption: false
+      userOption: 'logIn'
     }
   },
   methods:{
-    toggleUserOption(){
-      this.userOption = !this.userOption;
+    toggleUserOption(arg){
+      this.userOption = arg;
     }
   }
 }
@@ -169,17 +206,23 @@ export default {
     padding-bottom: 15px;
     height: 55px;
   }
-  .field:first-child input{
-    border-bottom: 0;
+  .field:first-child input,
+  .field:nth-child(2) input
+  {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
   }
-  .field:nth-child(2) input{
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: none;
+
+  .field:first-child input{
+    border-bottom: 0;
   }
+
+  .field:first-child input:focus ~ input{
+    border: 1px solid green;
+  }
+
+  
   .control.has-icons-left .icon, .control.has-icons-right .icon {
     height: 100%;
   }
@@ -254,12 +297,27 @@ export default {
     }
   }
 
+  @keyframes fadeIn{
+    from{
+      transform-origin: center;
+      transform: rotate3d(0,0,1, -200deg);
+      opacity: 0;
+    }
+    to{
+      transform-origin: center;
+      transform: none;
+      opacity: 1;
+    }
+
+  }
+
   #login {
     animation-name: bounceInUp;
   }
   #signUp{
     animation-name: bounceInDown;
   }
-
- 
+  #reset{
+    animation-name: fadeIn;
+  }
 </style>

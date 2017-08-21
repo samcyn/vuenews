@@ -10,14 +10,16 @@
                 </div>
                 <li>
                     <label class="checkbox">
-                        Select All Channels <input type="checkbox" value="all" @change="selectHandler($event)">
+                        <!--@change="selectHandler($event)"-->
+                        Select All Channels <input type="checkbox" value="all" v-model="selectAll">
                     </label>
                 </li>
                 
                 <li v-for="(channel, index) in channels">
                     
                     <label class="checkbox">
-                        {{channel.name}} <input type="checkbox" :value="channel.id" v-model="selectedIds" @change="selectHandler($event, index, channel)" number>
+                        <!-- @change="selectHandler($event, index, channel)" -->
+                        {{channel.name}} <input type="checkbox" :value="channel" v-model="$store.state.selectedChannels"  number>
                     </label>
                 </li>
             </ul>
@@ -54,8 +56,10 @@ export default {
                     name: 'TechRadar'
                 }
             ],
-            selectedIds: [],
-            selectedObjs: [],
+            selected: [],
+            //selectedChannels: [],
+            // selectedIds: [],
+            // selectedObjs: [],
             loading: false
         }
     },
@@ -69,67 +73,71 @@ export default {
             this.channels = response.data.sources;
             this.loading = false;
             
-            //this.loading = false;
         }); 
     },
     methods:{
         //handles the on change behaviour....
-        selectHandler(e, ind, arg){
-            //if all channels are selected do this
-            if(e.target.value == 'all'){
-                //if checkbox with value all is selected do this....
-                if(e.target.checked){
+        // selectHandler(e, ind, arg){
+        //     //if all channels are selected do this
+        //     if(e.target.value == 'all'){
+        //         //if checkbox with value all is selected do this....
+        //         if(e.target.checked){
 
-                    //this return array having channel.id as items..
-                    this.selectedIds = this.channels.map((channel => channel.id));
+        //             //this return array having channel.id as items..
+        //             this.selectedIds = this.channels.map((channel => channel.id));
                     
-                    //spread operator to  the rescue
-                    this.selectedObjs.push(...this.channels);
-                    // console.log(this.selectedObjs);
-                }
-                // else empty both arrays
-                else{
-                    this.selectedIds = [];
-                    this.selectedObjs = [];
-                }
-                return;
-            }
-            //do this if a particular checkbox is selected....
-            if(e.target.checked){
-                this.selectedObjs.push(arg);
-               // this.selected.push(arg.id);
-                // console.log(Array.from(this.selectedObjs));
-                // console.log(Array.from(this.selectedIds));
-            }
-            //or do this if a particular checkbox is unselected...
-            else{
-                this.selectedObjs.splice(ind, 1);
-                 //this.selected.splice(ind, 1);
-                // console.log(this.selectedObjs);
-                // console.log(this.selectedIds);
-            }
+        //             //spread operator to  the rescue
+        //             this.selectedObjs.push(...this.channels);
+        //             // console.log(this.selectedObjs);
+        //         }
+        //         // else empty both arrays
+        //         else{
+        //             this.selectedIds = [];
+        //             this.selectedObjs = [];
+        //         }
+        //         return;
+        //     }
+        //     //do this if a particular checkbox is selected....
+        //     if(e.target.checked){
+        //         this.selectedObjs.push(arg);
+        //        // this.selected.push(arg.id);
+        //         // console.log(Array.from(this.selectedObjs));
+        //         // console.log(Array.from(this.selectedIds));
+        //     }
+        //     //or do this if a particular checkbox is unselected...
+        //     else{
+        //         this.selectedObjs.splice(ind, 1);
+        //          //this.selected.splice(ind, 1);
+        //         // console.log(this.selectedObjs);
+        //         // console.log(this.selectedIds);
+        //     }
             
-        }
+        // }
     },
     computed: {
-        // selectAll: {
-        //     // get: function () {
-                
-        //     //     return this.channels ? this.selected.length == this.channels.length : false;
-        //     // },
-        //     // set: function (value) {
-        //     //     var selected = [];
+        selectAll: {
+            get: function () {
+                //console.log(this.$store.state.selectedChannels);
+                //return this.$store.state.selectedChannels
+                return this.channels ? this.$store.state.selectedChannels.length == this.channels.length : false;
+            },
+            set: function (value) {
+                //var selected = [];
+                var selectedChannels = [];
 
-        //     //     if (value) {
-        //     //         this.channels.forEach(function (channels) {
-        //     //             selected.push(channels.id);
-        //     //         });
-        //     //     }
-                
-        //     //     this.selected = selected;
-        //     //     console.log(this.selected);
-        //     // }
-        // }
+                if (value) {
+                    this.channels.forEach(function (channels) {
+                        //selected.push(channels.id);
+                        selectedChannels.push(channels);
+                    });
+                }
+
+                //dispatch action here....
+                this.$store.dispatch('selectedChannel', selectedChannels)
+            
+                //console.log(this.$store.state.selectedChannels);
+            }
+        }
     }
 }
 </script>

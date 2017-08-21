@@ -1,74 +1,78 @@
 <template>
     <main>
-        <section class="hero is-info is-medium">
-           
+        <div v-if="!channelCount">
+            <section class="hero is-info is-medium">
+            
 
-            <!-- Hero content: will be in the middle style="background-image: url('')"-->
-            <div class="hero-body"  v-bind:style="{ backgroundImage: 'url(' + background + ')' }">
-                <div class="overlay">
-                    <div class="container has-text-centered">
-                        <h1 class="title">
-                            {{title}}
-                        </h1>
-                        <h2 class="subtitle">
-                            {{subtitle}}
-                        </h2>
+                <!-- Hero content: will be in the middle style="background-image: url('')"-->
+                <div class="hero-body"  v-bind:style="{ backgroundImage: 'url(' + background + ')' }">
+                    <div class="overlay">
+                        <div class="container has-text-centered">
+                            <h1 class="title">
+                                {{title}}
+                            </h1>
+                            <h2 class="subtitle">
+                                {{subtitle}}
+                            </h2>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Hero footer: will stick at the bottom -->
-            <div class="hero-foot">
-                <nav class="tabs is-boxed is-fullwidth">
-                    <div class="container">
-                        <!-- menus goes here -->
-                        <menus @changeTitle="changePageTitle" :chosenNews="defaultNews">
-                        </menus>
-                    </div>
-                </nav>
-            </div>
-
-        </section>
-        <section class="articles">
-            <div class="container width-60p">
-                <div class="loader-container" v-if="loading">
-                    <div class="spinner"></div>
-                    <br>
-                    <p>Please wait...</p>
+                <!-- Hero footer: will stick at the bottom -->
+                <div class="hero-foot">
+                    <nav class="tabs is-boxed is-fullwidth">
+                        <div class="container">
+                            <!-- menus goes here -->
+                            <menus @changeTitle="changePageTitle" :chosenNews="defaultNews2">
+                            </menus>
+                        </div>
+                    </nav>
                 </div>
-                <article class="media" v-for="story in post" >
-                    <figure class="media-left">
-                        <p class="image is-100x100">
-                            <img :src="story.urlToImage">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <h4 class="media-heading">
-                                <router-link :to="'/contents/articles/' + story.id" >{{story.title || 'Untitled'}}</router-link>
-                            </h4>
-                            <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
-                            <p>{{story.description}}</p>
-                        </div>
-                        <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item">
-                                <span class="icon is-small"><i class="fa fa-reply"></i></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small"><i class="fa fa-retweet"></i></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small">
-                                    <i  @click="favorited(story)" :class="[story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
-                                </span>
-                            </a>
-                        </div>
-                        </nav>
+
+            </section>
+            <section class="articles">
+                <div class="container width-60p">
+                    <div class="loader-container" v-if="loading">
+                        <div class="spinner"></div>
+                        <br>
+                        <p>Please wait...</p>
                     </div>
-                </article>
-            </div>
-        </section>
+                    <article class="media" v-for="story in post" >
+                        <figure class="media-left">
+                            <p class="image is-100x100">
+                                <img :src="story.urlToImage">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <h4 class="media-heading">
+                                    <router-link :to="'/contents/articles/' + story.id" >{{story.title || 'Untitled'}}</router-link>
+                                </h4>
+                                <h5><i>by {{story.author || 'Anonymous'}}</i></h5>
+                                <p>{{story.description}}</p>
+                            </div>
+                            <nav class="level is-mobile">
+                            <div class="level-left">
+                                <a class="level-item">
+                                    <span class="icon is-small"><i class="fa fa-reply"></i></span>
+                                </a>
+                                <a class="level-item">
+                                    <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+                                </a>
+                                <a class="level-item">
+                                    <span class="icon is-small">
+                                        <i  @click="favorited(story)" :class="[story.isFavorite ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+        <!-- If no channel is selected show this ...-->
+        <div v-if="channelCount" class="noChannel">NO CHANNEL SELECTED</div>
     </main>
 </template>
 
@@ -90,14 +94,14 @@ export default {
     },
     data () {
         return {
-            //default news...
-            defaultNews: 'abc-news-au',
+            defaultNews: '',
             title: '',
             subtitle: '',
             stories: [],
             background: '',
             isFavorite: false,
             loading: false,
+            channelCount: false
         }
     },
     methods:{
@@ -119,7 +123,7 @@ export default {
             //change title...
             $this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
 
-            //using services to fecth data......
+            //using services to fetch data......
             ArticleService.get(arg.id.toLowerCase()).then(response => {
                 //update stories....
                 $this.stories = response.data.articles;
@@ -148,11 +152,11 @@ export default {
     },
     created(){
         
-        //fetch default news by passing an object....
+        // //fetch default news by passing an object....
         this.changePageTitle({
-            id: this.defaultNews,
+            id: this.defaultNews || '',
             $el:{
-                innerText: this.defaultNews
+                innerText: this.defaultNews || ''
             }
         });
       
@@ -166,6 +170,17 @@ export default {
             });
             console.log(this.stories);
             return this.stories;
+        },
+        //default news should always be the first object's id in the array...
+        defaultNews2(){
+            if(this.$store.state.selectedChannels.length > 0){
+                this.channelCount = false;
+                return this.$store.state.selectedChannels[0].id;
+            }
+            else{
+                this.channelCount = true;
+                return this.defaultNews;
+            }
         }
        
     }
@@ -223,6 +238,10 @@ export default {
    .image.is-100x100 {
         height: 100px;
         width: 100px;
+    }
+
+    .noChannel{
+        min-height: 450px;
     }
     
 </style>

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
+import store from './store/index'
 
 require('../node_modules/bulma/css/bulma.css');
 require('../node_modules/font-awesome/css/font-awesome.min.css');
@@ -16,6 +17,7 @@ Vue.use(VueResource);
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

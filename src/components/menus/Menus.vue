@@ -24,6 +24,7 @@ export default {
     data () {
         return {
             menus: [],
+            
             listItems: [
                 {
                     id: 'espn',
@@ -50,16 +51,17 @@ export default {
         //console.log(this.$children);
     },
     mounted(){
+        this.listItems =  this.$store.state.selectedChannels;
         //fetch all options avaialable...
         //using services ..........
-        ChannelsService.get().then(response => {
-            //update listItems here
-            this.listItems = response.data.sources;
-            // for(var i =0; i < this.listItems.length; i++){
-            //     console.log(this.listItems[i].url);
-            // }
-            //this.loading = false;
-        }); 
+        // ChannelsService.get().then(response => {
+        //     //update listItems here
+        //     this.listItems = response.data.sources;
+        //     // for(var i =0; i < this.listItems.length; i++){
+        //     //     console.log(this.listItems[i].url);
+        //     // }
+        //     //this.loading = false;
+        // }); 
     },
     methods:{
         activeClasshandler(arg){
