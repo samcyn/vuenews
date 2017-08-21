@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="nav-left">
                     <a class="nav-item">
-                        <img src="#" alt="Logo">
+                        <img src="../.././assets/logo.png" alt="Logo">
                     </a>
                     </div>
                     <span class="nav-toggle" @click="navController()">

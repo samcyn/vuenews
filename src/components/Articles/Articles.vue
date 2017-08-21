@@ -121,10 +121,12 @@ export default {
             $this.loading = true;
 
             //change title...
-            $this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
+            //$this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
+
+            $this.title = `Welcome to ${$this.defaultNews2.toUpperCase()}`;
 
             //using services to fetch data......
-            ArticleService.get(arg.id.toLowerCase()).then(response => {
+            ArticleService.get($this.defaultNews2.toLowerCase()).then(response => {
                 //update stories....
                 $this.stories = response.data.articles;
             
