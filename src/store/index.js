@@ -6,7 +6,8 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  selectedChannels: []
+  selectedChannels: [],
+  selectedArticles: []
 }
 
 export default new Vuex.Store({

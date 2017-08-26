@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import store from './store/index'
+//import vueScrollbar from 'vue-scrollbar'
 
 require('../node_modules/bulma/css/bulma.css');
 require('../node_modules/font-awesome/css/font-awesome.min.css');

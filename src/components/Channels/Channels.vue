@@ -1,13 +1,13 @@
 <template>
     <main>
+        <!-- loader before channels load up -->
+        <div class="loader-container" v-if="loading">
+            <div class="spinner"></div>
+            <br>
+            <p>Please wait...</p>
+        </div>
         <div class="contents">
             <ul class="channels">
-                <!-- loader before channels load up -->
-                <div class="loader-container" v-if="loading">
-                    <div class="spinner"></div>
-                    <br>
-                    <p>Please wait...</p>
-                </div>
                 <li>
                     <label class="checkbox">
                         <!--@change="selectHandler($event)"-->
@@ -144,6 +144,10 @@ export default {
 
 
 <style scoped>
+  body{
+      position: relative;
+  }
+
   main{
       padding: 100px 0;
   }

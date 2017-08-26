@@ -84,6 +84,7 @@ import ArticleService from '@/services/ArticleService'
 import Menus from '../menus/Menus.vue'
 
 
+
 export default {
     name: 'home',
     components:{
@@ -97,7 +98,6 @@ export default {
             defaultNews: '',
             title: '',
             subtitle: '',
-            stories: [],
             background: '',
             isFavorite: false,
             loading: false,
@@ -123,21 +123,23 @@ export default {
             //change title...
             //$this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
 
-            $this.title = `Welcome to ${$this.defaultNews2.toUpperCase()}`;
+            $this.title = `Welcome to ${(arg.$el.innerText).toUpperCase()}`;
 
             //using services to fetch data......
-            ArticleService.get($this.defaultNews2.toLowerCase()).then(response => {
-                //update stories....
-                $this.stories = response.data.articles;
-            
+            ArticleService.get(arg.id.toLowerCase()).then(response => {
                 
+                //commit action here to change selected article...
+                this.$store.dispatch('selectedArticles', response.data.articles)
+
+                //equate a variable called articles to  the state's selected articles
+                let article = this.$store.state.selectedArticles;
+
                 //change the background image to a random article background image base on stories length
-               // console.log(Math.floor(Math.random() * (this.stories.length + 1)));
-                $this.background = $this.stories[Math.floor(Math.random() * ($this.stories.length + 1))].urlToImage;
+                $this.background = article[Math.floor(Math.random() * (article.length + 1))].urlToImage;
 
                 
                // console.log(this.stories)
-                $this.subtitle = `Visit ${this.stories[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
+                $this.subtitle = `Visit ${article[0].url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im)} for more info`;
 
                 //hide loader
                 $this.loading = false;
@@ -165,13 +167,13 @@ export default {
     },
     computed:{
         post(){
-            const $stories = this.stories;
-            this.stories.forEach(function(story){
-                story['isFavorite'] = false;
-                 story['id'] = $stories.indexOf(story);
+            const $articles = this.$store.state.selectedArticles;
+            $articles.forEach(function($article){
+                $article['isFavorite'] = false;
+                 $article['id'] = $articles.indexOf($article);
             });
-            console.log(this.stories);
-            return this.stories;
+            //console.log(this.stories);
+            return $articles;
         },
         //default news should always be the first object's id in the array...
         defaultNews2(){
